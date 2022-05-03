@@ -183,7 +183,7 @@ Gripper::close()
 	setPuckPose();
 
 	// link both models through a joint
-	gazebo::physics::LinkPtr gripperLink = getLinkEndingWith(model_, "link");
+	gazebo::physics::LinkPtr gripperLink = getGripperLink();
 
 	if (!gripperLink) {
 		std::cerr << "Link 'gripper_grab' not found in gripper model" << std::endl;
