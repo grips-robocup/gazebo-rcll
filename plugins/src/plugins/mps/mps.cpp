@@ -364,10 +364,6 @@ void
 Mps::on_puck_msg(ConstPosePtr &msg)
 {
 	if (!wp_in_input_ && puck_in_input(msg)) {
-		if (wp_in_input_ == wp_in_middle_) {
-			SPDLOG_LOGGER_WARN(logger, "Workpiece {} is already at the middle! Not saying it is in input!", msg->name());
-			return;
-		}
 		wp_in_input_ = world_->ModelByName(msg->name());
 		if (!wp_in_input_) {
 			SPDLOG_LOGGER_WARN(logger, "Workpiece {} is input, but could not find model!", msg->name());
