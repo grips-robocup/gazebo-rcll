@@ -307,9 +307,7 @@ Mps::calculate_station_type_from_command(uint16_t value)
 void
 Mps::notify_worker()
 {
-	SPDLOG_LOGGER_INFO(logger, "notifying workers!");
 	worker_condition_.notify_one();
-	SPDLOG_LOGGER_INFO(logger, "finished notifying workers!");
 }
 
 void
@@ -317,11 +315,8 @@ Mps::worker_loop()
 {
 	SPDLOG_LOGGER_INFO(logger, "worker_loop started!");
 	while (!shutdown_) {
-		SPDLOG_LOGGER_INFO(logger, "waiting on lock...");
 		std::unique_lock<std::mutex> lock{worker_mutex_};
-		SPDLOG_LOGGER_INFO(logger, "waiting on condition...");
 		worker_condition_.wait(lock);
-		SPDLOG_LOGGER_INFO(logger, "freeing on lock...");
 		lock.unlock();
 		process_command_base();
 		process_command_in();
