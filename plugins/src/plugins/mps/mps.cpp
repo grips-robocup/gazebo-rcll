@@ -277,7 +277,9 @@ Mps::move_conveyor(const MachineSide &side)
 		return;
 	}
 	wp->SetWorldPose(target_pose);
-	SPDLOG_LOGGER_INFO(logger, "Moving workpiece {} to: {}/{}/{}", wp->GetName(), target_pose.Pos().X(), target_pose.Pos().Y(), target_pose.Pos().Z());
+	SPDLOG_LOGGER_INFO(logger, "Moving workpiece {} to: {}/{}/{}|{}/{}/{}", wp->GetName(),
+	target_pose.Pos().X(), target_pose.Pos().Y(), target_pose.Pos().Z(),
+	wp->WorldPose().Pos().X(), wp->WorldPose().Pos().Y(), wp->WorldPose().Pos().Z());
 	action_id_in_.SetValue((uint16_t)0);
 	payload1_in_.SetValue((uint16_t)0);
 	switch (side) {
