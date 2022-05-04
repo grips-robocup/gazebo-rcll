@@ -277,9 +277,8 @@ Mps::move_conveyor(const MachineSide &side)
 		return;
 	}
 	wp->SetWorldPose(target_pose);
-	SPDLOG_LOGGER_INFO(logger, "Moving workpiece {} to: {}/{}/{}|{}/{}/{}", wp->GetName(),
-	target_pose.Pos().X(), target_pose.Pos().Y(), target_pose.Pos().Z(),
-	wp->WorldPose().Pos().X(), wp->WorldPose().Pos().Y(), wp->WorldPose().Pos().Z());
+	SPDLOG_LOGGER_INFO(logger, "Moving workpiece {} to: {}|{}", wp->GetName(),
+	target_pose.Pos(), wp->WorldPose());
 	action_id_in_.SetValue((uint16_t)0);
 	payload1_in_.SetValue((uint16_t)0);
 	switch (side) {
@@ -365,6 +364,10 @@ void
 Mps::on_puck_msg(ConstPosePtr &msg)
 {
 	if (!wp_in_input_ && puck_in_input(msg)) {
+		if (wp_in_input_ == wp_in_middle_) {
+			SPDLOG_LOGGER_WARN(logger, "Workpiece {} is already at the middle! Not saying it is in input!", msg->name());
+			return;
+		}
 		wp_in_input_ = world_->ModelByName(msg->name());
 		if (!wp_in_input_) {
 			SPDLOG_LOGGER_WARN(logger, "Workpiece {} is input, but could not find model!", msg->name());
