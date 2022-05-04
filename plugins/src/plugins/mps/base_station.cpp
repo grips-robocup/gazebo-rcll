@@ -41,6 +41,7 @@ BaseStation::BaseStation(physics::ModelPtr _parent, sdf::ElementPtr _sdf) : Mps(
 void
 BaseStation::process_command_in()
 {
+	SPDLOG_LOGGER_INFO(logger, "process_command_in called!");
 	Mps::process_command_in();
 
 	uint16_t value = uint16_t(action_id_in_.GetValue());

@@ -307,12 +307,14 @@ Mps::calculate_station_type_from_command(uint16_t value)
 void
 Mps::notify_worker()
 {
+	SPDLOG_LOGGER_INFO(logger, "notifying workers!");
 	worker_condition_.notify_one();
 }
 
 void
 Mps::worker_loop()
 {
+	SPDLOG_LOGGER_INFO(logger, "worker_loop started!");
 	while (!shutdown_) {
 		std::unique_lock<std::mutex> lock{worker_mutex_};
 		worker_condition_.wait(lock);
